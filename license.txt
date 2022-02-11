@@ -1,0 +1,25 @@
+OpenWave-3KA is Copyright (c) 2021 Good Will Instrument Co., Ltd All Rights Reserved.
+
+
+This program is free software; you can redistribute it and/or modify it under the terms 
+of the GNU Lesser General Public License as published by the Free Software Foundation; 
+either version 2.1 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+See the GNU Lesser General Public License for more details.
+
+You can receive a copy of the GNU Lesser General Public License from http://www.gnu.org/
+
+Note:
+OpenWave-3KA uses third party software which is copyrighted by its respective copyright 
+holder. For details see the copyright notice of the individual package.
+
+The Qt GUI Toolkit is Copyright (c) 2018 Qt Company Ltd.  OpenWave-3KA use Qt version 5 
+library under the terms of the LGPL version 3.0.
+
+NI-VISA is a NI instrument driver that is an implementation of the Virtual Instrument 
+Software Architecture (VISA) I/O standard. NI-VISA is a trademark of National Instruments 
+Corporation.
+
+Before running OpenWave-3KA software, you have to install NI-VISA on your Windows OS.
