@@ -53,7 +53,7 @@ OpenWave-3KA relies on PyVISA-Py as instrument driver. You have to install PyVIS
 
 #### _Tips:_
 
-1.  *If you want to connect your DSO via ethernet. Don't forget to setup your IP address properly or set DHCP on(Utility -> I/O -> Ethernet -> DHCP/BOOTP on).  And enable the socket server on your DSO.*
+1.  *If you want to connect your DSO via ethernet. Don't forget to set up your IP address properly or set DHCP on(Utility -> I/O -> Ethernet -> DHCP/BOOTP on).  And enable the socket server on your DSO.*
 
 2.  *If you are using Linux, please add your username to group ```dialout``` to get proper privilege level for device accessing. (for GDS-2000E series only)*
     ```
@@ -103,7 +103,7 @@ You can also use a windows command line console to execute the program.
 D:\OpenWave-3KA V1.00>OpenWave-3KA.exe
 ```
 
-You have to select the connected interface from _VISA Resource_ page or _Config File_ page on the _Select Interface_ window. NI-VISA backend will automatically discover the connected USB device and the network device(with mDNS capability). In order to enable the mDNS capability, you have to enable Web Server function on your DSO first.  GDS-2000E series do not support mDNS functionality, you have to use a config file.
+You have to select the connected interface from _VISA Resource_ page or _Config File_ page on the _Select Interface_ window. NI-VISA backend will automatically discover the connected USB device and the network device(with mDNS capability). In order to enable the mDNS capability, you have to enable Web Server function on your DSO first.  The GDS-2000E series does not support mDNS functionality, you have to use a config file.
 
 You can also create a `port.config` file containing `172.16.5.94:3000`(as an example and for ethernet only) in the same folder for next time quick connection.
 
