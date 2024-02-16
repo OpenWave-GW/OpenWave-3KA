@@ -29,9 +29,9 @@ Module imported:
   1. PIL 8.0.1
   2. Numpy 1.19.4
 
-Version: 1.00
+Version: 1.01
 
-Modified on JAN 25 2022
+Modified on FEB 06 2024
 
 Programmer: Kevin Meng, Weiche Huang
 """
@@ -42,7 +42,7 @@ import struct
 import numpy as np
 import io, os, sys, time, platform
 
-__version__ = "1.00" #dso3ka_pyvisa module's version.
+__version__ = "1.01" #dso3ka_pyvisa module's version.
 
 sModelList=[['GDS-3352A', 'GDS-3652A'],                         # GDS-3xx2A
             ['GDS-3354A', 'GDS-3654A', 'MSO-3354', 'MSO-3654'], # GDS-3xx4A
@@ -50,11 +50,13 @@ sModelList=[['GDS-3352A', 'GDS-3652A'],                         # GDS-3xx2A
              'GDS-2102E','DCS-2102E','IDS-2102E','GDS-72102E','MSO-2102E','MSO-72102E','MSO-2102EA','MSO-72102EA','MDO-2102EC','MDO-72102EC','MDO-2102EG','MDO-72102EG','MDO-2102EX','MDO-72102EX','MDO-2102ES','MDO-72102ES',
              'GDS-2202E','DCS-2202E','IDS-2202E','GDS-72202E','MSO-2202E','MSO-72202E','MSO-2202EA','MSO-72202EA','MDO-2202EC','MDO-72202EC','MDO-2202EG','MDO-72202EG','MDO-2202EX','MDO-72202EX','MDO-2202ES','MDO-72202ES',
              'RSMSO-2102E','RSMSO-2202E','RSMSO-2102EA','RSMSO-2202EA','RSMDO-2102EG','RSMDO-2202EG','RSMDO-2102EX','RSMDO-2202EX',
-             'MDO-2102A','MDO-2202A','MDO-2302A','MDO-2102AG','MDO-2202AG','MDO-2302AG'],  # GDS-2xx2E
+             'MDO-2102A','MDO-2202A','MDO-2302A','MDO-2102AG','MDO-2202AG','MDO-2302AG',  # GDS-2xx2E
+             'MPO-2102B','MPO-2202P'], # MPO-2xx2
             ['GDS-2074E','DCS-2074E','IDS-2074E','GDS-72074E','MSO-2074E','MSO-72074E','MSO-2074EA','MSO-72074EA','MDO-2074EC','MDO-72074EC','MDO-2074EG','MDO-72074EG','MDO-2074EX','MDO-72074EX','MDO-2074ES','MDO-72074ES',
              'GDS-2104E','DCS-2104E','IDS-2104E','GDS-72104E','MSO-2104E','MSO-72104E','MSO-2104EA','MSO-72104EA','MDO-2104EC','MDO-72104EC','MDO-2104EG','MDO-72104EG','MDO-2104EX','MDO-72104EX','MDO-2104ES','MDO-72104ES',
              'GDS-2204E','DCS-2204E','IDS-2204E','GDS-72204E','MSO-2204E','MSO-72204E','MSO-2204EA','MSO-72204EA','MDO-2204EC','MDO-72204EC','MDO-2204EG','MDO-72204EG','MDO-2204EX','MDO-72204EX','MDO-2204ES','MDO-72204ES',
-             'RSMSO-2104E','RSMSO-2204E','RSMSO-2104EA','RSMSO-2204EA','RSMDO-2104EG','RSMDO-2204EG','RSMDO-2104EX','RSMDO-2204EX']]  # GDS-2xx4E
+             'RSMSO-2104E','RSMSO-2204E','RSMSO-2104EA','RSMSO-2204EA','RSMDO-2104EG','RSMDO-2204EG','RSMDO-2104EX','RSMDO-2204EX',  # GDS-2xx4E
+             'MPO-2104B','MPO-2204P']] # MPO-2xx4
 
 iStepPerDiv=[ 25,  50, 100,  200,  400,  800, 1600,  3200]
 iAdcCenter= [128, 256, 512, 1024, 2048, 4096, 8192, 16384]
@@ -340,13 +342,15 @@ class Dso:
         #Read file header.
         if(self.dataType=='csv'):
             info.append(f.readline().decode().split(',\r\n')[0])
-            if('3.0A' in info[0]):   # For GDS-3000A
+            if('3.0A' in info[0]):    # For GDS-3000A
                 item_num=27
-            elif('2.0E' in info[0]): # For GDS-2000E
+            elif('2.0EP' in info[0]): # For MPO-2000
+                item_num=27
+            elif('2.0E' in info[0]):  # For GDS-2000E, MDO-2000E
                 item_num=26
             elif('2.0MA' in info[0]): # For MDO-2000A
                 item_num=26
-            else:                    #Not supported format
+            else:                     #Not supported format
                 f.close()
                 print('Not supported format!')
                 return -1
@@ -362,13 +366,15 @@ class Dso:
                 self.dataMode='Detail'
         else: #lsf file
             info=f.readline().decode().split(';') #The last byte of header will be '\n'.
-            if('3.0A' in info[0]):   # For GDS-3000A
+            if('3.0A' in info[0]):    # For GDS-3000A
                 item_num=27
-            elif('2.0E' in info[0]): # For GDS-2000E
+            elif('2.0EP' in info[0]): # For MPO-2000
+                item_num=27
+            elif('2.0E' in info[0]):  # For GDS-2000E, MDO-2000E
                 item_num=26
             elif('2.0MA' in info[0]): # For MDO-2000A
                 item_num=26
-            else:                    #Not supported format
+            else:                     #Not supported format
                 f.close()
                 print('Format error 1!')
                 return -1
@@ -395,7 +401,10 @@ class Dso:
             self.hpos[0] =float(info[16].split(',')[1]) #Get horizontal position.
             self.dt[0]   =float(info[19].split(',')[1]) #Get sample period.
             if('3.0A' in info[0]):   # For GDS-3000A
-                data_bit_index=int(info[25].split(',')[1])-8 #Get data bit.
+                if(self.dataType=='csv'):
+                    data_bit_index=int(info[25].split(',')[1])-8 #Get data bit.
+                else: # lsf file format
+                    data_bit_index=int(info[24].split(',')[1])-8 #Get data bit.
                 if(data_bit_index >= 0) and (data_bit_index <= 7):
                     self.adc_center=iAdcCenter[data_bit_index]
                     self.steps_per_vdiv=iStepPerDiv[data_bit_index]
@@ -423,7 +432,7 @@ class Dso:
                 for x in range(24):
                     self.info[0].append(info[x])
                 self.info[0].append('Mode,Fast') #Convert info[] to csv compatible format.
-                if('3.0A' in info[0]):   # For GDS-3000A
+                if(('3.0A' in info[0]) or ('2.0EP' in info[0])):   # For GDS-3000A and MPO-2000
                     self.info[0].append('Data Bit,8')
                 self.info[0].append(info[item_num-2])
                 self.iWave[0] = np.array(unpack('<%sh' % int(len(wave)/2), wave))
@@ -452,8 +461,11 @@ class Dso:
                 self.vpos[ch] =float(info[13].split(',')[2*ch+1]) #Get vertical position.
                 self.hpos[ch] =float(info[16].split(',')[2*ch+1]) #Get horizontal position.
                 self.dt[ch]   =float(info[19].split(',')[2*ch+1]) #Get sample period.
-            if('3.0A' in info[0]):   # For GDS-3000A
-                data_bit_index=int(info[25].split(',')[1])-8 #Get data bit.
+            if(('3.0A' in info[0]) or ('2.0EP' in info[0])):     # For GDS-3000A and MPO-2000
+                if(self.dataType=='csv'):
+                    data_bit_index=int(info[25].split(',')[1])-8 #Get data bit.
+                else: # lsf file format
+                    data_bit_index=int(info[24].split(',')[1])-8 #Get data bit.
                 if(data_bit_index >= 0) and (data_bit_index <= 7):
                     self.adc_center=iAdcCenter[data_bit_index]
                     self.steps_per_vdiv=iStepPerDiv[data_bit_index]
