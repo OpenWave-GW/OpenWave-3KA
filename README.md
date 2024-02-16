@@ -29,7 +29,7 @@ Please unzip [OpenWave-3KA V1.02.zip](/exe/OpenWave-3KA_V1.02.zip) into a folder
 
 OpenWave-3KA relies on NI-VISA as instrument driver. You have to download NI-VISA from NI website and install it on your Windows before executing this program. If you want to connect a GDS-2000E series DSO, you have to download and install USB driver(dso_vpo V1.08) from [www.gwinstek.com](http://www.gwinstek.com) or [here](/dso_vpo_v108.zip) when the first connection with GDS-2000E.
 
-GDS-3000A and MPO-2000 use USBTMC as communication protocol, ther is no driver installation required.
+GDS-3000A and MPO-2000 use USBTMC as communication protocol, there is no driver installation required.
 
 
 #### _Linux:_
