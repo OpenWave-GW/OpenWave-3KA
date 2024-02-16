@@ -28,16 +28,16 @@ OpenWave-3KA is a python example program used to get waveform and image from DSO
 
 Environment:
   1. Python 3.9.5
-  2. dso3ka_pyvisa 1.00
+  2. dso3ka_pyvisa 1.01
   3. Matplotlib 3.3.3
   4. Numpy 1.20.3
   5. PySide2 5.15.2
   6. PIL 8.2.0
   7. PyVISA 1.11.3
 
-Version: 1.00
+Version: 1.01
 
-Modified on JAN 25 2022
+Modified on FEB 06 2024
 
 Programmer: Kevin Meng, Weiche Huang
 """
@@ -54,7 +54,7 @@ import os, sys, time
 import dso3ka_pyvisa
 import pyvisa
 
-__version__ = "1.00" #OpenWave-3KA software version.
+__version__ = "1.01" #OpenWave-3KA software version.
 
 def resource_path(relative_path):
     if getattr(sys, 'frozen', False): # if Bundle Resource
@@ -233,7 +233,7 @@ class Window(QtWidgets.QMainWindow):
                 elif('SOCKET' in interface_name):
                     inst.read_termination = '\n'
                     inst.timeout = 5000
-                elif('0x2184::0x006E' in interface_name) or ('0x2184::0x006F' in interface_name) or ('0x2184::0x0070' in interface_name) or ('0x2184::0x0071' in interface_name):
+                elif('0x2184::0x006E' in interface_name) or ('0x2184::0x006F' in interface_name) or ('0x2184::0x0070' in interface_name) or ('0x2184::0x0071' in interface_name) or ('0x2184::0x0085' in interface_name) or ('0x2184::0x0086' in interface_name):
                     inst.timeout = 5000
             except Exception as e:
                 inst=None
@@ -338,7 +338,7 @@ class Window(QtWidgets.QMainWindow):
         self.connect(self.pictAction, QtCore.SIGNAL("triggered()"), self.savePngAction)
 
         self.loadBtn = QtWidgets.QPushButton('Load')
-        self.loadBtn.setToolTip("Load CHx's raw data from file(*.csv, *.lsf).")
+        self.loadBtn.setToolTip("Load CHx's raw data from file(*.CSV, *.LSF).")
         self.loadBtn.setFixedSize(100, 50)
         self.loadBtn.clicked.connect(self.loadAction)
 
@@ -397,7 +397,7 @@ class Window(QtWidgets.QMainWindow):
 
     def saveCsvAction(self):
         if(self.typeFlag==True): #Save raw data to csv file.
-            file_name=QtWidgets.QFileDialog.getSaveFileName(self, "Save as", 'DS0001', "Fast CSV File(*.csv)")[0]
+            file_name=QtWidgets.QFileDialog.getSaveFileName(self, "Save as", 'DS0001', "Fast CSV File(*.CSV)")[0]
             num=len(dso.ch_list)
             #print('num=%d'%num)
             if(num==0):
@@ -417,7 +417,10 @@ class Window(QtWidgets.QMainWindow):
             for x in range(1,  item-1):
                 str=''
                 for ch in range(num):
-                    str+=('%s,' % dso.info[ch][x])
+                    if(dso.info[ch][x][0:4] == 'Mode'):
+                        str+='Mode,Fast,'
+                    else:
+                        str+=('%s,' % dso.info[ch][x])
                 str+='\r\n'
                 f.write(str.encode())
             str=''
@@ -466,7 +469,7 @@ class Window(QtWidgets.QMainWindow):
 
     def loadAction(self):
         dso.ch_list=[]
-        full_path_name=QtWidgets.QFileDialog.getOpenFileName(self,self.tr("Open File"),".","CSV/LSF files (*.csv *.lsf);;All files (*.*)")  
+        full_path_name=QtWidgets.QFileDialog.getOpenFileName(self,self.tr("Open File"),".","CSV/LSF files (*.CSV *.LSF);;All files (*.*)")  
         sFileName=full_path_name[0]
         print(sFileName)
         if(len(sFileName)<=0):
