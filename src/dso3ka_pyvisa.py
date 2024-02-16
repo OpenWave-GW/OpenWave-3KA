@@ -31,7 +31,7 @@ Module imported:
 
 Version: 1.01
 
-Modified on FEB 06 2024
+Modified on FEB 16 2024
 
 Programmer: Kevin Meng, Weiche Huang
 """
@@ -42,10 +42,10 @@ import struct
 import numpy as np
 import io, os, sys, time, platform
 
-__version__ = "1.01" #dso3ka_pyvisa module's version.
+__version__ = "1.02" #dso3ka_pyvisa module's version.
 
-sModelList=[['GDS-3352A', 'GDS-3652A'],                         # GDS-3xx2A
-            ['GDS-3354A', 'GDS-3654A', 'MSO-3354', 'MSO-3654'], # GDS-3xx4A
+sModelList=[['GDS-3352A','GDS-3652A','GDS-73352A','GDS-73652A'],                         # GDS-3xx2A
+            ['GDS-3354A','GDS-3654A','MSO-3354','MSO-3654','GDS-73354A','GDS-73654A'],   # GDS-3xx4A
             ['GDS-2072E','DCS-2072E','IDS-2072E','GDS-72072E','MSO-2072E','MSO-72072E','MSO-2072EA','MSO-72072EA','MDO-2072EC','MDO-72072EC','MDO-2072EG','MDO-72072EG','MDO-2072EX','MDO-72072EX','MDO-2072ES','MDO-72072ES',
              'GDS-2102E','DCS-2102E','IDS-2102E','GDS-72102E','MSO-2102E','MSO-72102E','MSO-2102EA','MSO-72102EA','MDO-2102EC','MDO-72102EC','MDO-2102EG','MDO-72102EG','MDO-2102EX','MDO-72102EX','MDO-2102ES','MDO-72102ES',
              'GDS-2202E','DCS-2202E','IDS-2202E','GDS-72202E','MSO-2202E','MSO-72202E','MSO-2202EA','MSO-72202EA','MDO-2202EC','MDO-72202EC','MDO-2202EG','MDO-72202EG','MDO-2202EX','MDO-72202EX','MDO-2202ES','MDO-72202ES',
