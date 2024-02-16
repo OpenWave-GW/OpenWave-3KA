@@ -6,7 +6,7 @@ This icon is copyright by Good Will Instrument Co., Ltd all rights reserved.
 
 
 
-OpenWave-3KA is an open-source project. It's a simple python program that can get image or raw data from digital storage oscilloscope(GDS-3000A/MSO-3000/GDS-2000E/DCS-2000E/IDS-2000E/MSO-2000E/MDO-2000E/MDO-2000A/RSMSO-2000E/RSMDO-2000E/MPO-2000 series) via USB, ethernet or GPIB(GDS-3000A only) port.  
+OpenWave-3KA is an open-source project. It's a simple python program that can get image or raw data from digital storage oscilloscope(GDS-3000A/GDS-73000A/MSO-3000/GDS-2000E/DCS-2000E/IDS-2000E/MSO-2000E/MDO-2000E/MDO-2000A/RSMSO-2000E/RSMDO-2000E/MPO-2000 series) via USB, ethernet or GPIB(GDS-3000A only) port.  
 
 Users can execute the same source code on Windows and Linux(Ubuntu) operating system. Users can also create multiple DSO connections at the same time.
 
@@ -25,7 +25,7 @@ Interface: USB, Ethernet and GPIB(GDS-3000A only).
 
 OS version: Windows 7/8/10 32 or 64 bits. 
 
-Please unzip [OpenWave-3KA V1.01.zip](/exe/OpenWave-3KA_V1.01.zip) into a folder and find OpenWave-3KA.exe in the folder. OpenWave-3KA.exe can be executed directly without installation.
+Please unzip [OpenWave-3KA V1.02.zip](/exe/OpenWave-3KA_V1.02.zip) into a folder and find OpenWave-3KA.exe in the folder. OpenWave-3KA.exe can be executed directly without installation.
 
 OpenWave-3KA relies on NI-VISA as instrument driver. You have to download NI-VISA from NI website and install it on your Windows before executing this program. If you want to connect a GDS-2000E series DSO, you have to download and install USB driver(dso_vpo V1.08) from [www.gwinstek.com](http://www.gwinstek.com) or [here](/dso_vpo_v108.zip) when the first connection with GDS-2000E.
 
