@@ -28,16 +28,16 @@ OpenWave-3KA is a python example program used to get waveform and image from DSO
 
 Environment:
   1. Python 3.9.5
-  2. dso3ka_pyvisa 1.01
+  2. dso3ka_pyvisa 1.02
   3. Matplotlib 3.3.3
   4. Numpy 1.20.3
   5. PySide2 5.15.2
   6. PIL 8.2.0
   7. PyVISA 1.11.3
 
-Version: 1.01
+Version: 1.02
 
-Modified on FEB 06 2024
+Modified on FEB 16 2024
 
 Programmer: Kevin Meng, Weiche Huang
 """
@@ -54,7 +54,7 @@ import os, sys, time
 import dso3ka_pyvisa
 import pyvisa
 
-__version__ = "1.01" #OpenWave-3KA software version.
+__version__ = "1.02" #OpenWave-3KA software version.
 
 def resource_path(relative_path):
     if getattr(sys, 'frozen', False): # if Bundle Resource
