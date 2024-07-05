@@ -28,16 +28,16 @@ OpenWave-3KA is a python example program used to get waveform and image from DSO
 
 Environment:
   1. Python 3.9.5
-  2. dso3ka_pyvisa 1.02
+  2. dso3ka_pyvisa 1.03
   3. Matplotlib 3.3.3
   4. Numpy 1.20.3
   5. PySide2 5.15.2
   6. PIL 8.2.0
   7. PyVISA 1.11.3
 
-Version: 1.02
+Version: 1.03
 
-Modified on FEB 16 2024
+Modified on JLY 03 2024
 
 Programmer: Kevin Meng, Weiche Huang
 """
@@ -54,7 +54,7 @@ import os, sys, time
 import dso3ka_pyvisa
 import pyvisa
 
-__version__ = "1.02" #OpenWave-3KA software version.
+__version__ = "1.03" #OpenWave-3KA software version.
 
 def resource_path(relative_path):
     if getattr(sys, 'frozen', False): # if Bundle Resource
@@ -109,10 +109,12 @@ class checkInterfaceWindow(QtWidgets.QWidget):
             if('SOCKET' in device):
                 self.deviceSetLW1.addItem(device)
                 self.device1.append(device)
-            elif('0x2184::0x006E' in device) or ('0x2184::0x006F' in device) or ('0x2184::0x0070' in device) or ('0x2184::0x0071' in device): # On Windows
+            elif('0x2184::0x006E' in device) or ('0x2184::0x006F' in device) or ('0x2184::0x0070' in device) or ('0x2184::0x0071' in device) or (
+                '0x2184::0x003F' in device) or ('0x2184::0x0040' in device) or ('0x2184::0x0041' in device) or ('0x2184::0x0042' in device) or ('0x2184::0x0085' in device) or ('0x2184::0x0086' in device):  # On Windows
                 self.deviceSetLW1.addItem(device)
                 self.device1.append(device)
-            elif('8580::110' in device) or ('8580::111 in device') or ('8580::112' in device) or ('8580::113' in device): # On Ubuntu
+            elif('8580::110' in device) or ('8580::111' in device) or ('8580::112' in device) or ('8580::113' in device) or (
+                '8580::63' in device) or ('8580::64' in device) or ('8580::65' in device) or ('8580::66' in device) or ('8580::133' in device) or ('8580::134' in device):  # On Ubuntu
                 self.deviceSetLW1.addItem(device)
                 self.device1.append(device)
             elif('ASRL' in device):
@@ -233,7 +235,8 @@ class Window(QtWidgets.QMainWindow):
                 elif('SOCKET' in interface_name):
                     inst.read_termination = '\n'
                     inst.timeout = 5000
-                elif('0x2184::0x006E' in interface_name) or ('0x2184::0x006F' in interface_name) or ('0x2184::0x0070' in interface_name) or ('0x2184::0x0071' in interface_name) or ('0x2184::0x0085' in interface_name) or ('0x2184::0x0086' in interface_name):
+                elif('0x2184::0x006E' in interface_name) or ('0x2184::0x006F' in interface_name) or ('0x2184::0x0070' in interface_name) or ('0x2184::0x0071' in interface_name) or ('0x2184::0x0085' in interface_name) or ('0x2184::0x0086' in interface_name) or (
+                    '0x2184::0x003F' in interface_name) or ('0x2184::0x0040' in interface_name) or ('0x2184::0x0041' in interface_name) or ('0x2184::0x0042' in interface_name):
                     inst.timeout = 5000
             except Exception as e:
                 inst=None
